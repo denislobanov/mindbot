@@ -27,8 +27,11 @@ mindbot config (Just command@(Command _ user channel _)) = do
   where
     message = greeting user channel
 
-mindbot _ Nothing =
+mindbot config Nothing = do
+  say message config
   return "No command given!"
+  where
+    message = SimpleMessage (EmojiIcon "wheelie") "mindbot" (GroupChannel "mindbot-testing") "Y I NO WORK?"
 
 greeting :: User -> Channel -> Message
 greeting user channel =
