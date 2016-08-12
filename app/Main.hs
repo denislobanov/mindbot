@@ -21,9 +21,11 @@ main = do
 
 mindbot :: Config -> Maybe Command -> IO Text
 mindbot config (Just command@(Command _ user channel _)) = do
-  putStrLn (show command)
-  say (greeting user channel) config
+  putStrLn $ " Got command: " <> show command
+  say message config
   return ""
+  where
+    message = greeting user channel
 
 mindbot _ Nothing =
   return "No command given!"
