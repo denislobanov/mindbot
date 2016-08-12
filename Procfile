@@ -1,1 +1,1 @@
-web: stack exec mindbot-exe
+web: mindbot-exe
