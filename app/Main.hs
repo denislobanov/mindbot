@@ -17,12 +17,19 @@ main = do
   url <-  liftM Text.pack $ getEnv "MINDBOT_TOKEN"
   port <- liftM (\x -> read x::Port) $ getEnv "PORT"
   putStrLn ("Listening on port " <> show port)
-  run port (slashSimple mindbot )
+  run port $ slashSimple (mindbot (Config url))
 
-mindbot :: Maybe Command -> IO Text
-mindbot (Just command@(Command _ user channel _)) = do
+mindbot :: Config -> Maybe Command -> IO Text
+mindbot config (Just command@(Command _ user channel _)) = do
   putStrLn (show command)
-  return "Hello! :)"
+  say (greeting user channel) config
+  return ""
 
-mindbot Nothing =
+mindbot _ Nothing =
   return "No command given!"
+
+greeting :: User -> Channel -> Message
+greeting user channel =
+  SimpleMessage (EmojiIcon "wheelie") "mindbot" channel $ "Hello " <> username
+  where
+    username = Text.pack $ show user
