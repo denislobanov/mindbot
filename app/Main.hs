@@ -9,21 +9,21 @@ import qualified Data.Text as Text
 -- import GHC.Generics
 import Data.Text.IO (readFile)
 import Network.Wai.Handler.Warp (run)
-
-
+import System.Environment
+import Control.Monad
 
 main :: IO ()
 main = do
-  url <- Text.filter (/= '\n') <$> readFile "token"
+  url <-  liftM Text.pack $ getEnv "MINDBOT_TOKEN"
   putStrLn ("Listening on port " <> show port)
-  run port (slashSimple (mindbot $ Config url))
+  run port (slashSimple mindbot )
   where
     port = 3334
 
-mindbot :: Config -> Maybe Command -> IO Text
-mindbot config (Just command@(Command _ user channel _)) = do
+mindbot :: Maybe Command -> IO Text
+mindbot (Just command@(Command _ user channel _)) = do
   putStrLn (show command)
   return "Hello! :)"
 
-mindbot _ Nothing =
+mindbot Nothing =
   return "No command given!"
