@@ -1,1 +1,1 @@
-web: mindbot-exe
+web: mindbot-exe $PORT
