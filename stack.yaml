@@ -2,6 +2,5 @@ flags: {}
 extra-package-dbs: []
 packages:
 - '.'
-extra-deps:
-- linklater-3.2.0.0
+extra-deps: [slack-api-0.9]
 resolver: lts-6.7

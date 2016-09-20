@@ -26,9 +26,8 @@ executable mindbot-exe
   build-depends:       base
                      , mindbot
                      , text
-                     , linklater
+                     , slack-api
                      , lens
-                     , warp
                      , base-prelude
   default-language:    Haskell2010
 
